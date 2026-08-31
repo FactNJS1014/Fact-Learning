@@ -15,7 +15,8 @@ export default async function CoursesPage({
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
   const params = await searchParams;
-  const category = typeof params.category === "string" ? params.category : undefined;
+  const category =
+    typeof params.category === "string" ? params.category : undefined;
   const level = typeof params.level === "string" ? params.level : undefined;
   const search = typeof params.search === "string" ? params.search : undefined;
   const page = typeof params.page === "string" ? parseInt(params.page, 10) : 1;
@@ -111,7 +112,12 @@ export default async function CoursesPage({
             >
               {/* Thumbnail */}
               <div className="h-40 bg-gradient-to-br from-primary/10 to-accent/10 flex items-center justify-center">
-                <LanguageLogo src={course.languageIcon} alt={course.title} size="xl" />
+                <LanguageLogo
+                  src={course.languageIcon}
+                  alt={course.title}
+                  size="xl"
+                 
+                />
               </div>
 
               <div className="p-5">
@@ -121,8 +127,8 @@ export default async function CoursesPage({
                       course.level === "BASIC"
                         ? "bg-emerald-500/10 text-emerald-400"
                         : course.level === "INTERMEDIATE"
-                        ? "bg-amber-500/10 text-amber-400"
-                        : "bg-red-500/10 text-red-400"
+                          ? "bg-amber-500/10 text-amber-400"
+                          : "bg-red-500/10 text-red-400"
                     }`}
                   >
                     {course.level}

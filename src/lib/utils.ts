@@ -55,22 +55,22 @@ export function calculateProgress(completed: number, total: number): number {
 }
 
 export const PROGRAMMING_LANGUAGES = [
-  { name: "Java", icon: "☕", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg", color: "#f89820" },
-  { name: "Python", icon: "🐍", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg", color: "#3776ab" },
-  { name: "Go", icon: "🐹", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/go/go-original.svg", color: "#00add8" },
-  { name: "PHP", icon: "🐘", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg", color: "#777bb4" },
-  { name: "Laravel", icon: "🔺", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/laravel/laravel-original.svg", color: "#ff2d20" },
-  { name: "Vue", icon: "💚", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vuejs/vuejs-original.svg", color: "#42b883" },
-  { name: "React", icon: "⚛️", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg", color: "#61dafb" },
-  { name: "Next.js", icon: "▲", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg", color: "#000000" },
-  { name: "Nuxt.js", icon: "💚", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nuxtjs/nuxtjs-original.svg", color: "#00dc82" },
-  { name: "Node.js", icon: "💚", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg", color: "#339933" },
-  { name: "Rust", icon: "🦀", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/rust/rust-original.svg", color: "#ce422b" },
-  { name: "C#", icon: "🔷", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/csharp/csharp-original.svg", color: "#512bd4" },
-  { name: "Flutter", icon: "💙", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flutter/flutter-original.svg", color: "#02569b" },
-  { name: "React Native", icon: "⚛️", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg", color: "#61dafb" },
-  { name: "Flask", icon: "🧪", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flask/flask-original.svg", color: "#000000" },
-  { name: "Django", icon: "🟢", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/django/django-original.svg", color: "#092e20" },
+  { name: "Java", icon: "☕", logo: "/images/java.png", color: "#f89820" },
+  { name: "Python", icon: "🐍", logo: "/images/Python.png", color: "#3776ab" },
+  { name: "Go", icon: "🐹", logo: "/images/golang.png", color: "#00add8" },
+  { name: "PHP", icon: "🐘", logo: "/images/php.png", color: "#777bb4" },
+  { name: "Laravel", icon: "🔺", logo: "/images/laravel.png", color: "#ff2d20" },
+  { name: "Vue", icon: "💚", logo: "/images/vue.png", color: "#42b883" },
+  { name: "React", icon: "⚛️", logo: "/images/react.png", color: "#61dafb" },
+  { name: "Next.js", icon: "▲", logo: "/images/nextjs.png", color: "#000000" },
+  { name: "Nuxt.js", icon: "💚", logo: "/images/Nuxt-icon.png", color: "#00dc82" },
+  { name: "Node.js", icon: "💚", logo: "/images/nodejs-icon.png", color: "#339933" },
+  { name: "Rust", icon: "🦀", logo: "/images/rust.svg", color: "#ce422b" },
+  { name: "C#", icon: "🔷", logo: "/images/C-Charp-icon.png", color: "#512bd4" },
+  { name: "Flutter", icon: "💙", logo: "/images/flutter.jpg", color: "#02569b" },
+  { name: "React Native", icon: "⚛️", logo: "/images/react-native.svg", color: "#61dafb" },
+  { name: "Flask", icon: "🧪", logo: "/images/flask-icon.png", color: "#000000" },
+  { name: "Django", icon: "🟢", logo: "/images/django-icon.png", color: "#092e20" },
 ];
 
 export const COURSE_LEVELS = ["BASIC", "INTERMEDIATE", "ADVANCED"] as const;
