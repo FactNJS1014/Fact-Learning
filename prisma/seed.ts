@@ -131,7 +131,7 @@ async function main() {
       level: "BASIC" as const,
       difficulty: "BEGINNER" as const,
       categoryId: backendCat.id,
-      languageIcon: "/images/Python.png",
+      languageIcon: "/images/Python.jpg",
       estimatedHours: 20,
       instructorName: "John Teacher",
       status: "PUBLISHED" as const,
@@ -154,7 +154,7 @@ async function main() {
       level: "INTERMEDIATE" as const,
       difficulty: "MEDIUM" as const,
       categoryId: backendCat.id,
-      languageIcon: "/images/Python.png",
+      languageIcon: "/images/Python.jpg",
       estimatedHours: 25,
       status: "PUBLISHED" as const,
       requirements: ["Python Basic course or equivalent knowledge"],
@@ -173,7 +173,7 @@ async function main() {
       level: "ADVANCED" as const,
       difficulty: "HARD" as const,
       categoryId: backendCat.id,
-      languageIcon: "/images/Python.png",
+      languageIcon: "/images/Python.jpg",
       estimatedHours: 30,
       status: "PUBLISHED" as const,
       requirements: ["Strong Python knowledge"],
@@ -192,7 +192,7 @@ async function main() {
       level: "BASIC" as const,
       difficulty: "BEGINNER" as const,
       categoryId: frontendCat.id,
-      languageIcon: "/images/javascript.png",
+      languageIcon: "/images/JavaScript.jpg",
       estimatedHours: 20,
       status: "PUBLISHED" as const,
       requirements: ["Basic HTML knowledge"],
@@ -211,7 +211,7 @@ async function main() {
       level: "BASIC" as const,
       difficulty: "BEGINNER" as const,
       categoryId: frontendCat.id,
-      languageIcon: "/images/react.png",
+      languageIcon: "/images/React.jpg",
       estimatedHours: 25,
       status: "PUBLISHED" as const,
       requirements: ["JavaScript basics"],
@@ -230,7 +230,7 @@ async function main() {
       level: "BASIC" as const,
       difficulty: "MEDIUM" as const,
       categoryId: frontendCat.id,
-      languageIcon: "/images/nextjs.png",
+      languageIcon: "/images/Nextjs.jpg",
       estimatedHours: 30,
       status: "PUBLISHED" as const,
       requirements: ["React basics", "JavaScript proficiency"],
@@ -249,7 +249,7 @@ async function main() {
       level: "BASIC" as const,
       difficulty: "BEGINNER" as const,
       categoryId: backendCat.id,
-      languageIcon: "/images/java.png",
+      languageIcon: "/images/Java.jpg",
       estimatedHours: 25,
       status: "PUBLISHED" as const,
       requirements: ["No prior experience needed"],
@@ -268,7 +268,7 @@ async function main() {
       level: "BASIC" as const,
       difficulty: "BEGINNER" as const,
       categoryId: backendCat.id,
-      languageIcon: "/images/golang.png",
+      languageIcon: "/images/Go.jpg",
       estimatedHours: 20,
       status: "PUBLISHED" as const,
       requirements: ["Any programming experience helpful"],
@@ -287,7 +287,7 @@ async function main() {
       level: "BASIC" as const,
       difficulty: "MEDIUM" as const,
       categoryId: systemsCat.id,
-      languageIcon: "/images/rust.svg",
+      languageIcon: "/images/Rust.jpg",
       estimatedHours: 25,
       status: "PUBLISHED" as const,
       requirements: ["Basic programming knowledge"],
@@ -306,7 +306,7 @@ async function main() {
       level: "BASIC" as const,
       difficulty: "BEGINNER" as const,
       categoryId: frontendCat.id,
-      languageIcon: "/images/vue.png",
+      languageIcon: "/images/Vuejs.jpg",
       estimatedHours: 20,
       status: "PUBLISHED" as const,
       requirements: ["HTML, CSS, JavaScript basics"],
@@ -325,7 +325,7 @@ async function main() {
       level: "BASIC" as const,
       difficulty: "BEGINNER" as const,
       categoryId: backendCat.id,
-      languageIcon: "/images/php.png",
+      languageIcon: "/images/PHP.jpg",
       estimatedHours: 20,
       status: "PUBLISHED" as const,
       requirements: ["Basic HTML knowledge"],
@@ -344,7 +344,7 @@ async function main() {
       level: "BASIC" as const,
       difficulty: "MEDIUM" as const,
       categoryId: frameworksCat.id,
-      languageIcon: "/images/laravel.png",
+      languageIcon: "/images/Laravel.jpg",
       estimatedHours: 30,
       status: "PUBLISHED" as const,
       requirements: ["PHP basics"],
@@ -382,7 +382,7 @@ async function main() {
       level: "BASIC" as const,
       difficulty: "MEDIUM" as const,
       categoryId: mobileCat.id,
-      languageIcon: "/images/react.png",
+      languageIcon: "/images/React-Native.jpg",
       estimatedHours: 25,
       status: "PUBLISHED" as const,
       requirements: ["React basics", "JavaScript proficiency"],
@@ -401,7 +401,7 @@ async function main() {
       level: "BASIC" as const,
       difficulty: "BEGINNER" as const,
       categoryId: backendCat.id,
-      languageIcon: "/images/nodejs-icon.png",
+      languageIcon: "/images/Nodejs.svg",
       estimatedHours: 25,
       status: "PUBLISHED" as const,
       requirements: ["JavaScript basics"],
@@ -419,7 +419,7 @@ async function main() {
       level: "BASIC" as const,
       difficulty: "MEDIUM" as const,
       categoryId: frontendCat.id,
-      languageIcon: "/images/Nuxt-icon.png",
+      languageIcon: "/images/Nuxt.jpg",
       estimatedHours: 25,
       status: "PUBLISHED" as const,
       requirements: ["Vue.js basics"],
@@ -438,7 +438,7 @@ async function main() {
       level: "BASIC" as const,
       difficulty: "BEGINNER" as const,
       categoryId: backendCat.id,
-      languageIcon: "/images/C-Charp-icon.png",
+      languageIcon: "/images/C-Charp.jpg",
       estimatedHours: 25,
       status: "PUBLISHED" as const,
       requirements: ["Any programming experience"],
@@ -456,7 +456,7 @@ async function main() {
       level: "BASIC" as const,
       difficulty: "BEGINNER" as const,
       categoryId: frameworksCat.id,
-      languageIcon: "/images/flask-icon.png",
+      languageIcon: "/images/flask.jpg",
       estimatedHours: 20,
       status: "PUBLISHED" as const,
       requirements: ["Python basics"],
@@ -474,7 +474,7 @@ async function main() {
       level: "BASIC" as const,
       difficulty: "MEDIUM" as const,
       categoryId: frameworksCat.id,
-      languageIcon: "/images/django-icon.png",
+      languageIcon: "/images/django-new.jpg",
       estimatedHours: 30,
       status: "PUBLISHED" as const,
       requirements: ["Python basics"],
@@ -483,6 +483,29 @@ async function main() {
         "Use the ORM",
         "Create admin panels",
         "Deploy applications",
+      ],
+    },
+    {
+      title: "JavaScript Complete — 20 Modules",
+      slug: "javascript-20modules",
+      description:
+        "Comprehensive JavaScript course with 20 modules covering data types, operators, conditionals, loops, arrays, objects, functions, and a full project application.",
+      level: "BASIC" as const,
+      difficulty: "BEGINNER" as const,
+      categoryId: frontendCat.id,
+      languageIcon: "/images/JavaScript.jpg",
+      estimatedHours: 50,
+      status: "PUBLISHED" as const,
+      requirements: ["No prior programming experience needed"],
+      objectives: [
+        "Master JavaScript data types and variables",
+        "Use all operators — arithmetic, comparison, logical",
+        "Write if, if-else, if-else-if, and switch-case conditions",
+        "Implement for, while, and do-while loops",
+        "Work with arrays and array methods",
+        "Create and manipulate objects",
+        "Write functions, arrow functions, and closures",
+        "Build a complete To-Do Manager project application",
       ],
     },
   ];
@@ -1155,6 +1178,202 @@ async function main() {
     }
   }
 
+  // ─── Seed JavaScript 20 Modules Course ────────────────
+  console.log("\n📚 Seeding JavaScript 20 Modules course...");
+  const { javascript20Modules } =
+    await import("./content/javascript-20modules");
+  const js20Course = courses.find((c) => c.slug === "javascript-20modules")!;
+
+  for (let modIdx = 0; modIdx < javascript20Modules.modules.length; modIdx++) {
+    const modData = javascript20Modules.modules[modIdx];
+    const mod = await prisma.module.create({
+      data: {
+        courseId: js20Course.id,
+        title: modData.title,
+        description: modData.description,
+        order: modIdx + 1,
+      },
+    });
+
+    for (let lesIdx = 0; lesIdx < modData.lessons.length; lesIdx++) {
+      const lesData = modData.lessons[lesIdx];
+      const lesson = await prisma.lesson.create({
+        data: {
+          moduleId: mod.id,
+          title: lesData.title,
+          slug: lesData.slug,
+          content: lesData.content,
+          order: lesIdx + 1,
+          estimatedMinutes: lesData.estimatedMinutes,
+          status: "PUBLISHED",
+        },
+      });
+
+      if (lesData.exercises) {
+        for (let exIdx = 0; exIdx < lesData.exercises.length; exIdx++) {
+          const ex = lesData.exercises[exIdx];
+          await prisma.exercise.create({
+            data: {
+              lessonId: lesson.id,
+              title: ex.title,
+              description: ex.description,
+              requirements: ex.requirements,
+              points: ex.points,
+              order: exIdx + 1,
+            },
+          });
+        }
+      }
+
+      if (lesData.quiz) {
+        const quiz = await prisma.quiz.create({
+          data: {
+            lessonId: lesson.id,
+            title: lesData.quiz.title,
+            passScore: 70,
+            timeLimit: 10,
+          },
+        });
+        for (let qIdx = 0; qIdx < lesData.quiz.questions.length; qIdx++) {
+          const q = lesData.quiz.questions[qIdx];
+          const question = await prisma.quizQuestion.create({
+            data: {
+              quizId: quiz.id,
+              question: q.question,
+              type: q.type as any,
+              points: 10,
+              order: qIdx + 1,
+            },
+          });
+          for (let oIdx = 0; oIdx < q.options.length; oIdx++) {
+            await prisma.quizOption.create({
+              data: {
+                questionId: question.id,
+                text: q.options[oIdx].text,
+                isCorrect: q.options[oIdx].isCorrect,
+                order: oIdx + 1,
+              },
+            });
+          }
+        }
+      }
+    }
+    console.log(
+      `  ✅ JS 20 Modules — ${modData.title} (${modData.lessons.length} lessons)`,
+    );
+  }
+
+  // ─── Seed 20-Module Content for All Languages ─────────────
+  console.log("\n📚 Seeding 20-Module content for all languages...");
+  
+  // Import 20-module content files
+  const { pythonModules: pythonBasic20Modules } = await import("./content/modules-python");
+  const { javaBasic20Modules } = await import("./content/java-20modules");
+  const { goBasic20Modules } = await import("./content/go-20modules");
+  const { phpBasic20Modules } = await import("./content/php-20modules");
+  const { vueBasic20Modules } = await import("./content/vue-20modules");
+  const { flutterBasic20Modules } = await import("./content/flutter-20modules");
+  const { csharpBasic20Modules } = await import("./content/csharp-20modules");
+  const { rustBasic20Modules } = await import("./content/rust-20modules");
+  const { nodejsBasic20Modules } = await import("./content/nodejs-20modules");
+  
+  // Helper function to seed a 20-module course
+  async function seed20ModuleCourse(courseSlug: string, courseContent: any) {
+    const course = courses.find((c) => c.slug === courseSlug);
+    if (!course) {
+      console.log(`  ⚠ Course not found: ${courseSlug}`);
+      return;
+    }
+    
+    for (let modIdx = 0; modIdx < courseContent.modules.length; modIdx++) {
+      const modData = courseContent.modules[modIdx];
+      const mod = await prisma.module.create({
+        data: {
+          courseId: course.id,
+          title: modData.title,
+          description: modData.description,
+          order: modIdx + 1,
+        },
+      });
+      
+      for (let lesIdx = 0; lesIdx < modData.lessons.length; lesIdx++) {
+        const lesData = modData.lessons[lesIdx];
+        const lesson = await prisma.lesson.create({
+          data: {
+            moduleId: mod.id,
+            title: lesData.title,
+            slug: lesData.slug,
+            content: lesData.content,
+            order: lesIdx + 1,
+            estimatedMinutes: lesData.estimatedMinutes,
+            status: "PUBLISHED",
+          },
+        });
+        
+        if (lesData.exercises) {
+          for (let exIdx = 0; exIdx < lesData.exercises.length; exIdx++) {
+            const ex = lesData.exercises[exIdx];
+            await prisma.exercise.create({
+              data: {
+                lessonId: lesson.id,
+                title: ex.title,
+                description: ex.description,
+                requirements: ex.requirements,
+                points: ex.points,
+                order: exIdx + 1,
+              },
+            });
+          }
+        }
+        
+        if (lesData.quiz) {
+          const quiz = await prisma.quiz.create({
+            data: {
+              lessonId: lesson.id,
+              title: lesData.quiz.title,
+              passScore: 70,
+              timeLimit: 10,
+            },
+          });
+          for (let qIdx = 0; qIdx < lesData.quiz.questions.length; qIdx++) {
+            const q = lesData.quiz.questions[qIdx];
+            const question = await prisma.quizQuestion.create({
+              data: {
+                quizId: quiz.id,
+                question: q.question,
+                type: q.type as any,
+                points: 10,
+                order: qIdx + 1,
+              },
+            });
+            for (let oIdx = 0; oIdx < q.options.length; oIdx++) {
+              await prisma.quizOption.create({
+                data: {
+                  questionId: question.id,
+                  text: q.options[oIdx].text,
+                  isCorrect: q.options[oIdx].isCorrect,
+                  order: oIdx + 1,
+                },
+              });
+            }
+          }
+        }
+      }
+      console.log(`  ✅ ${course.title} — ${modData.title} (${modData.lessons.length} lessons)`);
+    }
+  }
+  
+  // Seed all 20-module courses
+  await seed20ModuleCourse("python-basic", pythonBasic20Modules);
+  await seed20ModuleCourse("java-basic", javaBasic20Modules);
+  await seed20ModuleCourse("go-basic", goBasic20Modules);
+  await seed20ModuleCourse("php-basic", phpBasic20Modules);
+  await seed20ModuleCourse("vue-basic", vueBasic20Modules);
+  await seed20ModuleCourse("flutter-basic", flutterBasic20Modules);
+  await seed20ModuleCourse("csharp-basic", csharpBasic20Modules);
+  await seed20ModuleCourse("rust-basic", rustBasic20Modules);
+  await seed20ModuleCourse("nodejs-basic", nodejsBasic20Modules);
+  
   console.log("\n🎉 Seeding complete!");
   console.log("\n📋 Test Accounts:");
   console.log("  Admin:      admin@factlearning.com / password123");

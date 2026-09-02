@@ -3,23 +3,42 @@ import { db } from "../db";
 export async function getLessonById(id: string) {
   return db.lesson.findUnique({
     where: { id },
-    include: {
+    select: {
+      id: true,
+      title: true,
+      slug: true,
+      content: true,
+      videoUrl: true,
+      order: true,
+      estimatedMinutes: true,
       module: {
-        include: {
-          course: true,
+        select: {
+          id: true,
+          title: true,
+          courseId: true,
+          course: { select: { slug: true, title: true } },
           lessons: {
             where: { status: "PUBLISHED" },
             orderBy: { order: "asc" },
+            select: {
+              id: true,
+              title: true,
+              order: true,
+              estimatedMinutes: true,
+            },
           },
         },
       },
-      exercises: { orderBy: { order: "asc" } },
+      exercises: {
+        orderBy: { order: "asc" },
+        select: { id: true, title: true, description: true, points: true },
+      },
       quizzes: {
-        include: {
-          questions: {
-            include: { options: true },
-            orderBy: { order: "asc" },
-          },
+        orderBy: { createdAt: "asc" },
+        select: {
+          id: true,
+          title: true,
+          questions: { select: { id: true } },
         },
       },
     },

@@ -41,9 +41,11 @@ export async function getCourses(params?: {
       include: {
         category: true,
         modules: {
-          include: {
+          select: {
+            id: true,
             lessons: {
               where: { status: "PUBLISHED" },
+              select: { id: true },
             },
           },
         },
@@ -81,9 +83,14 @@ export async function getCourseBySlug(slug: string) {
           lessons: {
             where: { status: "PUBLISHED" },
             orderBy: { order: "asc" },
-            include: {
-              exercises: true,
-              quizzes: true,
+            select: {
+              id: true,
+              title: true,
+              slug: true,
+              estimatedMinutes: true,
+              order: true,
+              exercises: { select: { id: true } },
+              quizzes: { select: { id: true } },
             },
           },
         },
@@ -148,32 +155,19 @@ export async function getCourseProgress(userId: string, courseId: string) {
 
   if (!enrollment) return null;
 
-  // Get total lessons in course
-  const course = await db.course.findUnique({
-    where: { id: courseId },
-    include: {
-      modules: {
-        include: {
-          lessons: { where: { status: "PUBLISHED" } },
-        },
-      },
+  // Get total lessons count using _count
+  const totalLessons = await db.lesson.count({
+    where: {
+      module: { courseId },
+      status: "PUBLISHED",
     },
   });
 
-  if (!course) return null;    const totalLessons = course.modules.reduce(
-        (acc: number, m: { lessons: unknown[] }) => acc + m.lessons.length,
-        0
-      );
-
-  // Get completed lessons
-  const lessonIds = course.modules.flatMap((m: { lessons: { id: string }[] }) =>
-    m.lessons.map((l: { id: string }) => l.id)
-  );
-
+  // Get completed lessons count
   const completedLessons = await db.lessonProgress.count({
     where: {
       userId,
-      lessonId: { in: lessonIds },
+      lesson: { module: { courseId } },
       status: "COMPLETED",
     },
   });

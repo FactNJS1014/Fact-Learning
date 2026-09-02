@@ -111,12 +111,12 @@ export default async function CoursesPage({
               className="bg-card border border-border rounded-xl overflow-hidden hover:border-primary/50 hover:shadow-lg transition-all group"
             >
               {/* Thumbnail */}
-              <div className="h-40 bg-gradient-to-br from-primary/10 to-accent/10 flex items-center justify-center">
+              <div className="h-48 bg-gradient-to-br from-primary/10 to-accent/10 flex items-center justify-center">
                 <LanguageLogo
                   src={course.languageIcon}
                   alt={course.title}
                   size="xl"
-                 
+                  className="drop-shadow-lg"
                 />
               </div>
 

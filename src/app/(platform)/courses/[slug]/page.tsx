@@ -69,8 +69,8 @@ export default async function CourseDetailPage({
       {/* Header */}
       <div className="bg-card border border-border rounded-2xl p-8 mb-8">
         <div className="flex items-start gap-6">
-          <div className="w-20 h-20 rounded-xl bg-gradient-to-br from-primary/10 to-accent/10 flex items-center justify-center shrink-0">
-            <LanguageLogo src={course.languageIcon} alt={course.title} size="lg" />
+          <div className="w-28 h-28 rounded-xl bg-gradient-to-br from-primary/10 to-accent/10 flex items-center justify-center shrink-0">
+            <LanguageLogo src={course.languageIcon} alt={course.title} size="xl" className="drop-shadow-lg" />
           </div>
           <div className="flex-1">
             <div className="flex items-center gap-2 mb-2">
