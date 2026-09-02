@@ -1,7 +1,6 @@
 import { getDashboardStats } from "@/lib/services/user.service";
 import { getSessionUser } from "@/lib/auth";
 import Link from "next/link";
-import { calculateProgress } from "@/lib/utils";
 import { LanguageLogo } from "@/components/ui/language-logo";
 
 export const dynamic = "force-dynamic";
@@ -12,12 +11,78 @@ export const metadata = {
 
 export default async function DashboardPage() {
   const authUser = await getSessionUser();
-  if (!authUser) return null;
+  if (!authUser) {
+    return (
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="text-center py-20">
+          <span className="text-4xl block mb-4">🔒</span>
+          <h1 className="text-xl font-bold text-foreground mb-2">
+            Please log in
+          </h1>
+          <p className="text-muted-foreground text-sm mb-6">
+            You need to be logged in to view the dashboard.
+          </p>
+          <Link
+            href="/login"
+            className="bg-primary text-primary-foreground px-6 py-2.5 rounded-lg font-semibold text-sm hover:opacity-90"
+          >
+            Login
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
+  let dashboardData;
+  try {
+    dashboardData = await getDashboardStats(authUser.id);
+  } catch (error) {
+    console.error("Dashboard stats error:", error);
+    return (
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="text-center py-20">
+          <span className="text-4xl block mb-4">⚠️</span>
+          <h1 className="text-xl font-bold text-foreground mb-2">
+            Unable to load dashboard
+          </h1>
+          <p className="text-muted-foreground text-sm mb-6">
+            There was a problem loading your data. Please try again.
+          </p>
+          <Link
+            href="/dashboard"
+            className="bg-primary text-primary-foreground px-6 py-2.5 rounded-lg font-semibold text-sm hover:opacity-90"
+          >
+            Try Again
+          </Link>
+        </div>
+      </div>
+    );
+  }
 
   const { user, stats, activeEnrollments, completedEnrollments, continueLearning, notifications } =
-    await getDashboardStats(authUser.id);
+    dashboardData;
 
-  if (!user) return null;
+  if (!user) {
+    return (
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="text-center py-20">
+          <span className="text-4xl block mb-4">👤</span>
+          <h1 className="text-xl font-bold text-foreground mb-2">
+            User not found
+          </h1>
+          <p className="text-muted-foreground text-sm mb-6">
+            We couldn&apos;t find your user data. Please try logging in again.
+          </p>
+          <Link
+            href="/login"
+            className="bg-primary text-primary-foreground px-6 py-2.5 rounded-lg font-semibold text-sm hover:opacity-90"
+          >
+            Login
+          </Link>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">

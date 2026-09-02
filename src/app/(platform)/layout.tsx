@@ -15,7 +15,12 @@ export default async function PlatformLayout({
     redirect("/login");
   }
 
-  const unreadCount = await getUnreadCount(user.id);
+  let unreadCount = 0;
+  try {
+    unreadCount = await getUnreadCount(user.id);
+  } catch {
+    // Silently handle notification count errors
+  }
 
   return (
     <div className="min-h-screen flex flex-col">
