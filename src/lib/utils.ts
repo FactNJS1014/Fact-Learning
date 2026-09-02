@@ -56,7 +56,7 @@ export function calculateProgress(completed: number, total: number): number {
 
 export const PROGRAMMING_LANGUAGES = [
   { name: "Java", icon: "☕", logo: "/images/Java.jpg", color: "#f89820" },
-  { name: "Python", icon: "🐍", logo: "/images/Python.png", color: "#3776ab" },
+  { name: "Python", icon: "🐍", logo: "/images/Python.jpg", color: "#3776ab" },
   { name: "Go", icon: "🐹", logo: "/images/Go.jpg", color: "#00add8" },
   { name: "PHP", icon: "🐘", logo: "/images/PHP.jpg", color: "#777bb4" },
   {
