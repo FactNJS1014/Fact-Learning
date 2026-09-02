@@ -2,9 +2,12 @@
 
 import Link from "next/link";
 import { useActionState } from "react";
+import { useSearchParams } from "next/navigation";
 import { registerAction } from "@/lib/actions/auth.actions";
 
 export default function RegisterPage() {
+  const searchParams = useSearchParams();
+  const redirectTo = searchParams.get("redirect") || "/dashboard";
   const [state, formAction, isPending] = useActionState(registerAction, null);
 
   return (
@@ -23,6 +26,7 @@ export default function RegisterPage() {
       )}
 
       <form action={formAction} className="space-y-4">
+        <input type="hidden" name="redirect" value={redirectTo} />
         <div className="grid grid-cols-2 gap-4">
           <div>
             <label className="block text-sm font-medium text-foreground mb-1.5">
@@ -115,7 +119,7 @@ export default function RegisterPage() {
 
       <p className="text-center text-muted-foreground text-sm mt-6">
         Already have an account?{" "}
-        <Link href="/login" className="text-primary hover:underline font-medium">
+        <Link href={`/login${redirectTo !== "/dashboard" ? `?redirect=${encodeURIComponent(redirectTo)}` : ""}`} className="text-primary hover:underline font-medium">
           Login
         </Link>
       </p>

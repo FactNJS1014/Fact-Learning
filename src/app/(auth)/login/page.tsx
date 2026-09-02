@@ -2,9 +2,12 @@
 
 import Link from "next/link";
 import { useActionState } from "react";
+import { useSearchParams } from "next/navigation";
 import { loginAction } from "@/lib/actions/auth.actions";
 
 export default function LoginPage() {
+  const searchParams = useSearchParams();
+  const redirectTo = searchParams.get("redirect") || "/dashboard";
   const [state, formAction, isPending] = useActionState(loginAction, null);
 
   return (
@@ -23,6 +26,7 @@ export default function LoginPage() {
       )}
 
       <form action={formAction} className="space-y-4">
+        <input type="hidden" name="redirect" value={redirectTo} />
         <div>
           <label className="block text-sm font-medium text-foreground mb-1.5">
             Email or Username

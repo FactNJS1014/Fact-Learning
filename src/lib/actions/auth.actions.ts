@@ -36,7 +36,8 @@ export async function registerAction(
     return { error: "An unexpected error occurred. Please try again." };
   }
 
-  redirect("/dashboard");
+  const redirectTo = formData.get("redirect") as string | null;
+  redirect(redirectTo || "/dashboard");
 }
 
 export async function loginAction(
