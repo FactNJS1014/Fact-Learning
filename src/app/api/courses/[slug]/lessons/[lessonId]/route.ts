@@ -1,5 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getLessonById, getLessonProgress } from "@/lib/services/lesson.service";
+import {
+  getLessonContent,
+  getLessonProgress,
+  recordLessonView,
+} from "@/lib/services/lesson.service";
 import { getSessionUser } from "@/lib/auth";
 import { db } from "@/lib/db";
 
@@ -33,7 +37,7 @@ export async function GET(
     return NextResponse.json({ error: "Not enrolled" }, { status: 403 });
   }
 
-  const lesson = await getLessonById(lessonId);
+  const lesson = await getLessonContent(lessonId);
 
   if (!lesson) {
     return NextResponse.json({ error: "Lesson not found" }, { status: 404 });
@@ -47,22 +51,7 @@ export async function GET(
   const progress = await getLessonProgress(user.id, lessonId);
 
   // Start progress if not started
-  if (!progress) {
-    await db.lessonProgress.create({
-      data: {
-        userId: user.id,
-        lessonId,
-        status: "IN_PROGRESS",
-        startedAt: new Date(),
-        lastAccessedAt: new Date(),
-      },
-    });
-  } else {
-    await db.lessonProgress.update({
-      where: { id: progress.id },
-      data: { lastAccessedAt: new Date() },
-    });
-  }
+  await recordLessonView(user.id, lessonId);
 
   return NextResponse.json({ lesson, progress });
 }

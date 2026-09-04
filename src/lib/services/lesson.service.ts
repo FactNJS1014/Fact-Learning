@@ -1,53 +1,106 @@
 import { db } from "../db";
+import { unstable_cache } from "next/cache";
 
-export async function getLessonById(id: string) {
-  return db.lesson.findUnique({
-    where: { id },
-    select: {
-      id: true,
-      title: true,
-      slug: true,
-      content: true,
-      videoUrl: true,
-      order: true,
-      estimatedMinutes: true,
-      module: {
+/**
+ * Lesson content (title, markdown, module, siblings, exercises, quizzes) is
+ * identical for every user, so it lives in Next's data cache and skips the
+ * remote Neon database on repeat views. Avoid nested `include`s — Prisma
+ * resolves each nesting level as a separate sequential round-trip — so the
+ * pieces are fetched in parallel instead. Revalidates at most every 60s;
+ * tag "lesson-content" for on-demand invalidation from admin mutations.
+ */
+export const getLessonContent = unstable_cache(
+  async (id: string) => {
+    const [lesson, exercises, quizzes] = await Promise.all([
+      db.lesson.findUnique({
+        where: { id },
         select: {
           id: true,
           title: true,
-          courseId: true,
-          course: { select: { slug: true, title: true } },
-          lessons: {
-            where: { status: "PUBLISHED" },
-            orderBy: { order: "asc" },
+          slug: true,
+          content: true,
+          videoUrl: true,
+          order: true,
+          estimatedMinutes: true,
+          moduleId: true,
+          module: {
             select: {
               id: true,
               title: true,
-              order: true,
-              estimatedMinutes: true,
+              courseId: true,
+              course: { select: { slug: true, title: true } },
             },
           },
         },
-      },
-      exercises: {
+      }),
+      db.exercise.findMany({
+        where: { lessonId: id },
         orderBy: { order: "asc" },
         select: { id: true, title: true, description: true, points: true },
-      },
-      quizzes: {
+      }),
+      db.quiz.findMany({
+        where: { lessonId: id },
         orderBy: { createdAt: "asc" },
         select: {
           id: true,
           title: true,
-          questions: { select: { id: true } },
+          _count: { select: { questions: true } },
         },
+      }),
+    ]);
+
+    if (!lesson) return null;
+
+    // Sibling lessons (sidebar + prev/next) depend on the module id, so they
+    // run after the parallel batch above — two short trips instead of ~6.
+    const lessons = await db.lesson.findMany({
+      where: { moduleId: lesson.moduleId, status: "PUBLISHED" },
+      orderBy: { order: "asc" },
+      select: {
+        id: true,
+        title: true,
+        order: true,
+        estimatedMinutes: true,
       },
-    },
-  });
-}
+    });
+
+    return {
+      ...lesson,
+      exercises,
+      quizzes: quizzes.map((q) => ({
+        id: q.id,
+        title: q.title,
+        questionCount: q._count.questions,
+      })),
+      module: { ...lesson.module, lessons },
+    };
+  },
+  ["lesson-content"],
+  { revalidate: 60, tags: ["lesson-content"] }
+);
 
 export async function getLessonProgress(userId: string, lessonId: string) {
   return db.lessonProgress.findUnique({
     where: { userId_lessonId: { userId, lessonId } },
+  });
+}
+
+/**
+ * Single-upsert "view" record: creates an IN_PROGRESS row on first visit and
+ * bumps lastAccessedAt afterwards. One query, safe to call on every lesson
+ * render.
+ */
+export async function recordLessonView(userId: string, lessonId: string) {
+  return db.lessonProgress.upsert({
+    where: { userId_lessonId: { userId, lessonId } },
+    create: {
+      userId,
+      lessonId,
+      status: "IN_PROGRESS",
+      startedAt: new Date(),
+      lastAccessedAt: new Date(),
+    },
+    update: { lastAccessedAt: new Date() },
   });
 }
 
