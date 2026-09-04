@@ -17,8 +17,6 @@ const protectedRoutes = [
   "/quizzes",
 ];
 
-const authRoutes = ["/login", "/register"];
-
 const publicRoutes = ["/", "/api/auth/login", "/api/auth/register"];
 
 export function middleware(request: NextRequest) {
@@ -30,20 +28,17 @@ export function middleware(request: NextRequest) {
     (route) => pathname === route || pathname.startsWith(route + "/")
   );
 
-  const isAuthRoute = authRoutes.some(
-    (route) => pathname === route || pathname.startsWith(route + "/")
-  );
-
   const isPublicRoute = publicRoutes.some(
     (route) => pathname === route || pathname.startsWith(route + "/")
   );
 
   const isApiRoute = pathname.startsWith("/api/");
 
-  // Redirect authenticated users away from auth routes
-  if (isAuthRoute && sessionToken) {
-    return NextResponse.redirect(new URL("/dashboard", request.url));
-  }
+  // NOTE: /login and /register are NOT redirected here based on cookie
+  // presence. The (auth) layout validates the session against the database
+  // (getSessionUser) and redirects genuinely logged-in users to /dashboard.
+  // Redirecting on cookie presence alone bounces users with an expired or
+  // stale session into an infinite /register -> /dashboard -> /login loop.
 
   // Redirect unauthenticated users from protected routes
   if (isProtectedRoute && !sessionToken) {
