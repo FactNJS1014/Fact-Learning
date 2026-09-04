@@ -9,6 +9,10 @@ async function main() {
 
   // Clean existing data using Prisma deleteMany
   console.log("  Cleaning existing data...");
+  await prisma.learningActivity.deleteMany();
+  await prisma.projectProgress.deleteMany();
+  await prisma.project.deleteMany();
+  await prisma.exerciseAttempt.deleteMany();
   await prisma.userAchievement.deleteMany();
   await prisma.achievement.deleteMany();
   await prisma.certificate.deleteMany();
@@ -131,7 +135,7 @@ async function main() {
       level: "BASIC" as const,
       difficulty: "BEGINNER" as const,
       categoryId: backendCat.id,
-      languageIcon: "/images/Python.jpg",
+      languageIcon: "/images/python.png",
       estimatedHours: 20,
       instructorName: "John Teacher",
       status: "PUBLISHED" as const,
@@ -154,7 +158,7 @@ async function main() {
       level: "INTERMEDIATE" as const,
       difficulty: "MEDIUM" as const,
       categoryId: backendCat.id,
-      languageIcon: "/images/Python.jpg",
+      languageIcon: "/images/python.png",
       estimatedHours: 25,
       status: "PUBLISHED" as const,
       requirements: ["Python Basic course or equivalent knowledge"],
@@ -173,7 +177,7 @@ async function main() {
       level: "ADVANCED" as const,
       difficulty: "HARD" as const,
       categoryId: backendCat.id,
-      languageIcon: "/images/Python.jpg",
+      languageIcon: "/images/python.png",
       estimatedHours: 30,
       status: "PUBLISHED" as const,
       requirements: ["Strong Python knowledge"],
@@ -192,7 +196,7 @@ async function main() {
       level: "BASIC" as const,
       difficulty: "BEGINNER" as const,
       categoryId: frontendCat.id,
-      languageIcon: "/images/JavaScript.jpg",
+      languageIcon: "/images/javascript.png",
       estimatedHours: 20,
       status: "PUBLISHED" as const,
       requirements: ["Basic HTML knowledge"],
@@ -211,7 +215,7 @@ async function main() {
       level: "BASIC" as const,
       difficulty: "BEGINNER" as const,
       categoryId: frontendCat.id,
-      languageIcon: "/images/React.jpg",
+      languageIcon: "/images/react.png",
       estimatedHours: 25,
       status: "PUBLISHED" as const,
       requirements: ["JavaScript basics"],
@@ -230,7 +234,7 @@ async function main() {
       level: "BASIC" as const,
       difficulty: "MEDIUM" as const,
       categoryId: frontendCat.id,
-      languageIcon: "/images/Nextjs.jpg",
+      languageIcon: "/images/nextjs.png",
       estimatedHours: 30,
       status: "PUBLISHED" as const,
       requirements: ["React basics", "JavaScript proficiency"],
@@ -249,7 +253,7 @@ async function main() {
       level: "BASIC" as const,
       difficulty: "BEGINNER" as const,
       categoryId: backendCat.id,
-      languageIcon: "/images/Java.jpg",
+      languageIcon: "/images/java.png",
       estimatedHours: 25,
       status: "PUBLISHED" as const,
       requirements: ["No prior experience needed"],
@@ -268,7 +272,7 @@ async function main() {
       level: "BASIC" as const,
       difficulty: "BEGINNER" as const,
       categoryId: backendCat.id,
-      languageIcon: "/images/Go.jpg",
+      languageIcon: "/images/golang.png",
       estimatedHours: 20,
       status: "PUBLISHED" as const,
       requirements: ["Any programming experience helpful"],
@@ -287,7 +291,7 @@ async function main() {
       level: "BASIC" as const,
       difficulty: "MEDIUM" as const,
       categoryId: systemsCat.id,
-      languageIcon: "/images/Rust.jpg",
+      languageIcon: "/images/rust.png",
       estimatedHours: 25,
       status: "PUBLISHED" as const,
       requirements: ["Basic programming knowledge"],
@@ -306,7 +310,7 @@ async function main() {
       level: "BASIC" as const,
       difficulty: "BEGINNER" as const,
       categoryId: frontendCat.id,
-      languageIcon: "/images/Vuejs.jpg",
+      languageIcon: "/images/vue.png",
       estimatedHours: 20,
       status: "PUBLISHED" as const,
       requirements: ["HTML, CSS, JavaScript basics"],
@@ -325,7 +329,7 @@ async function main() {
       level: "BASIC" as const,
       difficulty: "BEGINNER" as const,
       categoryId: backendCat.id,
-      languageIcon: "/images/PHP.jpg",
+      languageIcon: "/images/php.png",
       estimatedHours: 20,
       status: "PUBLISHED" as const,
       requirements: ["Basic HTML knowledge"],
@@ -344,7 +348,7 @@ async function main() {
       level: "BASIC" as const,
       difficulty: "MEDIUM" as const,
       categoryId: frameworksCat.id,
-      languageIcon: "/images/Laravel.jpg",
+      languageIcon: "/images/laravel.png",
       estimatedHours: 30,
       status: "PUBLISHED" as const,
       requirements: ["PHP basics"],
@@ -363,7 +367,7 @@ async function main() {
       level: "BASIC" as const,
       difficulty: "BEGINNER" as const,
       categoryId: mobileCat.id,
-      languageIcon: "/images/flutter.jpg",
+      languageIcon: "/images/flutter.png",
       estimatedHours: 25,
       status: "PUBLISHED" as const,
       requirements: ["Any programming experience"],
@@ -382,7 +386,7 @@ async function main() {
       level: "BASIC" as const,
       difficulty: "MEDIUM" as const,
       categoryId: mobileCat.id,
-      languageIcon: "/images/React-Native.jpg",
+      languageIcon: "/images/reactnative.png",
       estimatedHours: 25,
       status: "PUBLISHED" as const,
       requirements: ["React basics", "JavaScript proficiency"],
@@ -401,7 +405,7 @@ async function main() {
       level: "BASIC" as const,
       difficulty: "BEGINNER" as const,
       categoryId: backendCat.id,
-      languageIcon: "/images/Nodejs.svg",
+      languageIcon: "/images/nodejs.png",
       estimatedHours: 25,
       status: "PUBLISHED" as const,
       requirements: ["JavaScript basics"],
@@ -419,7 +423,7 @@ async function main() {
       level: "BASIC" as const,
       difficulty: "MEDIUM" as const,
       categoryId: frontendCat.id,
-      languageIcon: "/images/Nuxt.jpg",
+      languageIcon: "/images/nuxt.png",
       estimatedHours: 25,
       status: "PUBLISHED" as const,
       requirements: ["Vue.js basics"],
@@ -438,7 +442,7 @@ async function main() {
       level: "BASIC" as const,
       difficulty: "BEGINNER" as const,
       categoryId: backendCat.id,
-      languageIcon: "/images/C-Charp.jpg",
+      languageIcon: "/images/csharp.png",
       estimatedHours: 25,
       status: "PUBLISHED" as const,
       requirements: ["Any programming experience"],
@@ -456,7 +460,7 @@ async function main() {
       level: "BASIC" as const,
       difficulty: "BEGINNER" as const,
       categoryId: frameworksCat.id,
-      languageIcon: "/images/flask.jpg",
+      languageIcon: "/images/flask.png",
       estimatedHours: 20,
       status: "PUBLISHED" as const,
       requirements: ["Python basics"],
@@ -474,7 +478,7 @@ async function main() {
       level: "BASIC" as const,
       difficulty: "MEDIUM" as const,
       categoryId: frameworksCat.id,
-      languageIcon: "/images/django-new.jpg",
+      languageIcon: "/images/django.png",
       estimatedHours: 30,
       status: "PUBLISHED" as const,
       requirements: ["Python basics"],
@@ -493,7 +497,7 @@ async function main() {
       level: "BASIC" as const,
       difficulty: "BEGINNER" as const,
       categoryId: frontendCat.id,
-      languageIcon: "/images/JavaScript.jpg",
+      languageIcon: "/images/javascript.png",
       estimatedHours: 50,
       status: "PUBLISHED" as const,
       requirements: ["No prior programming experience needed"],
@@ -1265,9 +1269,10 @@ async function main() {
 
   // ─── Seed 20-Module Content for All Languages ─────────────
   console.log("\n📚 Seeding 20-Module content for all languages...");
-  
+
   // Import 20-module content files
-  const { pythonModules: pythonBasic20Modules } = await import("./content/modules-python");
+  const { pythonModules: pythonBasic20Modules } =
+    await import("./content/modules-python");
   const { javaBasic20Modules } = await import("./content/java-20modules");
   const { goBasic20Modules } = await import("./content/go-20modules");
   const { phpBasic20Modules } = await import("./content/php-20modules");
@@ -1276,7 +1281,18 @@ async function main() {
   const { csharpBasic20Modules } = await import("./content/csharp-20modules");
   const { rustBasic20Modules } = await import("./content/rust-20modules");
   const { nodejsBasic20Modules } = await import("./content/nodejs-20modules");
-  
+  const { reactBasic20Modules } = await import("./content/react-20modules");
+  const { nextjsBasic20Modules } = await import("./content/nextjs-20modules");
+  const { laravelBasic20Modules } = await import("./content/laravel-20modules");
+  const { nuxtjsBasic20Modules } = await import("./content/nuxtjs-20modules");
+  const { reactNativeBasic20Modules } =
+    await import("./content/react-native-20modules");
+  const { reactNativeExtraModules } =
+    await import("./content/react-native-extra");
+  const { flaskBasic20Modules } = await import("./content/flask-20modules");
+  const { djangoBasic20Modules } = await import("./content/django-20modules");
+  const { djangoExtraModules } = await import("./content/django-extra");
+
   // Helper function to seed a 20-module course
   async function seed20ModuleCourse(courseSlug: string, courseContent: any) {
     const course = courses.find((c) => c.slug === courseSlug);
@@ -1284,7 +1300,7 @@ async function main() {
       console.log(`  ⚠ Course not found: ${courseSlug}`);
       return;
     }
-    
+
     for (let modIdx = 0; modIdx < courseContent.modules.length; modIdx++) {
       const modData = courseContent.modules[modIdx];
       const mod = await prisma.module.create({
@@ -1295,7 +1311,7 @@ async function main() {
           order: modIdx + 1,
         },
       });
-      
+
       for (let lesIdx = 0; lesIdx < modData.lessons.length; lesIdx++) {
         const lesData = modData.lessons[lesIdx];
         const lesson = await prisma.lesson.create({
@@ -1309,7 +1325,7 @@ async function main() {
             status: "PUBLISHED",
           },
         });
-        
+
         if (lesData.exercises) {
           for (let exIdx = 0; exIdx < lesData.exercises.length; exIdx++) {
             const ex = lesData.exercises[exIdx];
@@ -1325,7 +1341,7 @@ async function main() {
             });
           }
         }
-        
+
         if (lesData.quiz) {
           const quiz = await prisma.quiz.create({
             data: {
@@ -1359,10 +1375,12 @@ async function main() {
           }
         }
       }
-      console.log(`  ✅ ${course.title} — ${modData.title} (${modData.lessons.length} lessons)`);
+      console.log(
+        `  ✅ ${course.title} — ${modData.title} (${modData.lessons.length} lessons)`,
+      );
     }
   }
-  
+
   // Seed all 20-module courses
   await seed20ModuleCourse("python-basic", pythonBasic20Modules);
   await seed20ModuleCourse("java-basic", javaBasic20Modules);
@@ -1373,7 +1391,56 @@ async function main() {
   await seed20ModuleCourse("csharp-basic", csharpBasic20Modules);
   await seed20ModuleCourse("rust-basic", rustBasic20Modules);
   await seed20ModuleCourse("nodejs-basic", nodejsBasic20Modules);
-  
+  await seed20ModuleCourse("react-basic", reactBasic20Modules);
+  await seed20ModuleCourse("nextjs-basic", nextjsBasic20Modules);
+  await seed20ModuleCourse("laravel-basic", laravelBasic20Modules);
+  await seed20ModuleCourse("nuxtjs-basic", nuxtjsBasic20Modules);
+  await seed20ModuleCourse("react-native-basic", {
+    ...reactNativeBasic20Modules,
+    modules: [...reactNativeBasic20Modules.modules, ...reactNativeExtraModules],
+  });
+  await seed20ModuleCourse("flask-basic", flaskBasic20Modules);
+  await seed20ModuleCourse("django-basic", {
+    ...djangoBasic20Modules,
+    modules: [...djangoBasic20Modules.modules, ...djangoExtraModules],
+  });
+
+  // ─── Seed Projects for all courses ────────────────────────
+  console.log("\n🚀 Seeding projects for all courses...");
+  const { allProjects } = await import("./content/projects-data");
+  for (const { courseSlug, projects } of allProjects) {
+    const course = courses.find((c) => c.slug === courseSlug);
+    if (!course) {
+      console.log(`  ⚠ Course not found for projects: ${courseSlug}`);
+      continue;
+    }
+    for (const p of projects) {
+      await prisma.project.create({
+        data: {
+          courseId: course.id,
+          title: p.title,
+          slug: p.slug,
+          description: p.description,
+          difficulty: p.difficulty,
+          estimatedHours: p.estimatedHours,
+          technologies: p.technologies,
+          requirements: p.requirements,
+          features: p.features,
+          dbDesign: p.dbDesign,
+          apiDesign: p.apiDesign,
+          folderStructure: p.folderStructure,
+          tutorial: p.tutorial,
+          starterCode: p.starterCode,
+          finalCode: p.finalCode,
+          challenge: p.challenge,
+          status: "PUBLISHED",
+          order: p.order,
+        },
+      });
+    }
+    console.log(`  ✅ ${projects.length} projects for ${courseSlug}`);
+  }
+
   console.log("\n🎉 Seeding complete!");
   console.log("\n📋 Test Accounts:");
   console.log("  Admin:      admin@factlearning.com / password123");

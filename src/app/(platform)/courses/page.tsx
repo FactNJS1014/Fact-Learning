@@ -1,4 +1,4 @@
-import { getCourses, getCategories } from "@/lib/services/course.service";
+import { getCourseCatalog, getCourseCategories } from "@/lib/services/course.service";
 import { COURSE_LEVELS } from "@/lib/utils";
 import Link from "next/link";
 import { LanguageLogo } from "@/components/ui/language-logo";
@@ -21,15 +21,14 @@ export default async function CoursesPage({
   const search = typeof params.search === "string" ? params.search : undefined;
   const page = typeof params.page === "string" ? parseInt(params.page, 10) : 1;
 
-  const { courses, total, totalPages, currentPage } = await getCourses({
-    category,
-    level,
-    search,
-    page,
-    status: "PUBLISHED",
-  });
-
-  const categories = await getCategories();
+  // Run the two independent DB queries concurrently instead of serially
+  // (each is a separate round-trip to the remote Neon database).
+  const [courseData, categories] = await Promise.all([
+    // Cached catalog data (revalidated every 60s) — identical for all users.
+    getCourseCatalog({ category, level, search, page }),
+    getCourseCategories(),
+  ]);
+  const { courses, total, totalPages, currentPage } = courseData;
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">

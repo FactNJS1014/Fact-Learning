@@ -3,8 +3,9 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 // ─── Users & Auth ───────────────────────────────────────────
@@ -39,6 +40,10 @@ model User {
   certificates       Certificate[]
   notifications      Notification[]
   userStats          UserStats?
+  hideFromLeaderboard Boolean        @default(false)
+  projectProgress    ProjectProgress[]
+  learningActivities LearningActivity[]
+  exerciseAttempts   ExerciseAttempt[]
 
   @@index([email])
   @@index([username])
@@ -97,6 +102,7 @@ model Course {
   category   CourseCategory @relation(fields: [categoryId], references: [id])
   modules    Module[]
   enrollments Enrollment[]
+  projects   Project[]
 
   @@index([slug])
   @@index([status])
@@ -131,12 +137,12 @@ model Lesson {
   createdAt        DateTime     @default(now())
   updatedAt        DateTime     @updatedAt
 
-  module         Module             @relation(fields: [moduleId], references: [id], onDelete: Cascade)
-  lessonProgress LessonProgress[]
-  exercises      Exercise[]
-  quizzes        Quiz[]
-  bookmarks      Bookmark[]
-  notes          Note[]
+  module           Module             @relation(fields: [moduleId], references: [id], onDelete: Cascade)
+  lessonProgress   LessonProgress[]
+  exercises        Exercise[]
+  quizzes          Quiz[]
+  bookmarks        Bookmark[]
+  notes            Note[]
 
   @@index([moduleId])
 }
@@ -238,6 +244,7 @@ model Exercise {
 
   lesson     Lesson            @relation(fields: [lessonId], references: [id], onDelete: Cascade)
   progress   ExerciseProgress[]
+  attempts   ExerciseAttempt[]
 
   @@index([lessonId])
 }
@@ -257,6 +264,21 @@ model ExerciseProgress {
 
   @@unique([userId, exerciseId])
   @@index([userId])
+}
+
+model ExerciseAttempt {
+  id            String   @id @default(uuid())
+  userId        String
+  exerciseId    String
+  submittedCode String?
+  passed        Boolean  @default(false)
+  submittedAt   DateTime @default(now())
+
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  exercise Exercise @relation(fields: [exerciseId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([exerciseId])
 }
 
 // ─── Quizzes ────────────────────────────────────────────────
@@ -437,5 +459,96 @@ enum NotificationType {
   ACHIEVEMENT
   COURSE_COMPLETED
   CERTIFICATE_READY
+  PROJECT_COMPLETED
   SYSTEM
+}
+
+// ─── Projects ──────────────────────────────────────────────
+
+model Project {
+  id             String       @id @default(uuid())
+  courseId       String
+  title          String
+  slug           String
+  description    String
+  difficulty     Difficulty   @default(BEGINNER)
+  estimatedHours Float?
+  technologies   String[]
+  requirements   String[]
+  features       String[]
+  dbDesign       String?
+  apiDesign      String?
+  folderStructure String?
+  tutorial       String       @default("")
+  starterCode    String?
+  finalCode      String?
+  challenge      String?
+  status         CourseStatus @default(DRAFT)
+  order          Int          @default(0)
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+
+  course   Course            @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  progress ProjectProgress[]
+
+  @@unique([courseId, slug])
+  @@index([courseId])
+  @@index([status])
+}
+
+model ProjectProgress {
+  id          String        @id @default(uuid())
+  userId      String
+  projectId   String
+  status      ProjectStatus @default(NOT_STARTED)
+  githubUrl   String?
+  demoUrl     String?
+  notes       String?
+  startedAt   DateTime?
+  completedAt DateTime?
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, projectId])
+  @@index([userId])
+  @@index([projectId])
+}
+
+enum ProjectStatus {
+  NOT_STARTED
+  IN_PROGRESS
+  COMPLETED
+}
+
+// ─── Learning Activity ─────────────────────────────────────
+
+model LearningActivity {
+  id        String       @id @default(uuid())
+  userId    String
+  type      ActivityType
+  meta      Json?
+  createdAt DateTime     @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([createdAt])
+}
+
+enum ActivityType {
+  LOGIN
+  LOGOUT
+  COURSE_STARTED
+  LESSON_VIEWED
+  LESSON_COMPLETED
+  QUIZ_COMPLETED
+  EXERCISE_COMPLETED
+  PROJECT_STARTED
+  PROJECT_COMPLETED
+  BOOKMARK_ADDED
+  NOTE_CREATED
+  CERTIFICATE_EARNED
 }

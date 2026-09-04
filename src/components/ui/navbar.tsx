@@ -1,9 +1,11 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useTheme } from "./theme-provider";
 import { logoutAction } from "@/lib/actions/auth.actions";
+import { getUnreadCountAction } from "@/lib/actions/notification.actions";
 
 interface NavbarProps {
   user?: {
@@ -16,9 +18,27 @@ interface NavbarProps {
   unreadCount?: number;
 }
 
-export function Navbar({ user, unreadCount = 0 }: NavbarProps) {
+export function Navbar({ user, unreadCount: initialUnread = 0 }: NavbarProps) {
   const pathname = usePathname();
   const { theme, setTheme } = useTheme();
+
+  // The unread badge is fetched after hydration so the server layout only
+  // needs one session lookup (the count is not on the render critical path).
+  const [unreadCount, setUnreadCount] = useState(initialUnread);
+  useEffect(() => {
+    if (!user) return;
+    let cancelled = false;
+    getUnreadCountAction()
+      .then((count) => {
+        if (!cancelled) setUnreadCount(count);
+      })
+      .catch(() => {
+        // Session errors are handled elsewhere; keep the badge hidden.
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [user]);
 
   return (
     <nav className="sticky top-0 z-40 border-b border-border bg-nav-bg backdrop-blur-md">

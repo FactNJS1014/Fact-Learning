@@ -11,6 +11,10 @@ const protectedRoutes = [
   "/settings",
   "/playground",
   "/admin",
+  "/projects",
+  "/exercises",
+  "/progress",
+  "/quizzes",
 ];
 
 const authRoutes = ["/login", "/register"];

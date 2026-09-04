@@ -1,23 +1,29 @@
 import { db } from "../db";
+import { Prisma } from "@prisma/client";
+import { unstable_cache } from "next/cache";
 
-export async function getCourses(params?: {
+export type CourseQueryParams = {
   category?: string;
   level?: string;
   search?: string;
   status?: string;
   page?: number;
   limit?: number;
-}) {
-  const page = params?.page || 1;
+};
+
+export async function getCourses(params?: CourseQueryParams) {
+  const rawPage = params?.page ?? 1;
+  const page = Number.isInteger(rawPage) && rawPage >= 1 ? rawPage : 1;
   const limit = params?.limit || 12;
   const skip = (page - 1) * limit;
 
   const where: Record<string, unknown> = {};
 
+  // No status filter = all statuses (used by the admin list, which must see
+  // drafts to publish them). Student-facing callers pass "PUBLISHED"
+  // explicitly.
   if (params?.status) {
     where.status = params.status;
-  } else {
-    where.status = "PUBLISHED";
   }
 
   if (params?.category) {
@@ -35,20 +41,16 @@ export async function getCourses(params?: {
     ];
   }
 
+  // Fetch the page and the total in parallel. Avoid nesting `modules -> lessons`
+  // in the include: Prisma resolves each nested level with a separate sequential
+  // round-trip to the database (one query per level), which is very slow on a
+  // remote Neon connection. Instead count published lessons in a single
+  // aggregate query keyed by courseId.
   const [courses, total] = await Promise.all([
     db.course.findMany({
       where,
       include: {
         category: true,
-        modules: {
-          select: {
-            id: true,
-            lessons: {
-              where: { status: "PUBLISHED" },
-              select: { id: true },
-            },
-          },
-        },
         _count: { select: { enrollments: true } },
       },
       orderBy: { createdAt: "desc" },
@@ -58,19 +60,59 @@ export async function getCourses(params?: {
     db.course.count({ where }),
   ]);
 
+  const lessonCountById = new Map<string, number>();
+  if (courses.length > 0) {
+    const rows = await db.$queryRaw<
+      Array<{ courseId: string; lessonCount: number }>
+    >`
+      SELECT m."courseId" AS "courseId", COUNT(l.id)::int AS "lessonCount"
+      FROM "Lesson" l
+      INNER JOIN "Module" m ON m."id" = l."moduleId"
+      WHERE l."status" = 'PUBLISHED'
+        AND m."courseId" IN (${Prisma.join(courses.map((c) => c.id))})
+      GROUP BY m."courseId"
+    `;
+    for (const row of rows) lessonCountById.set(row.courseId, row.lessonCount);
+  }
+
   return {
     courses: courses.map((course) => ({
       ...course,
-      lessonCount: course.modules.reduce(
-        (acc, m) => acc + m.lessons.length,
-        0
-      ),
+      lessonCount: lessonCountById.get(course.id) ?? 0,
     })),
     total,
     totalPages: Math.ceil(total / limit),
     currentPage: page,
   };
 }
+
+/**
+ * Cached catalog listing for student-facing pages. The course catalog is
+ * identical for every visitor, so it can live in Next's data cache instead of
+ * hitting the remote Neon database on every request. Revalidates at most every
+ * 60 seconds; tag is "course-catalog" for on-demand invalidation from admin
+ * mutations. Admin pages should keep using the uncached `getCourses`.
+ */
+export const getCourseCatalog = (params?: CourseQueryParams) =>
+  unstable_cache(
+    async () =>
+      getCourses({
+        ...params,
+        status: params?.status ?? "PUBLISHED",
+      }),
+    ["course-catalog", JSON.stringify(params ?? {})],
+    { revalidate: 60, tags: ["course-catalog"] }
+  )();
+
+/**
+ * Cached category list for the catalog filter bar (changes rarely).
+ */
+export const getCourseCategories = () =>
+  unstable_cache(
+    async () => getCategories(),
+    ["course-categories"],
+    { revalidate: 300, tags: ["course-categories"] }
+  )();
 
 export async function getCourseBySlug(slug: string) {
   return db.course.findUnique({
